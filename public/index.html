@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAI Payroll — Payroll Management</title>
+  <meta name="description" content="Professional payroll management system for businesses. Manage employees, attendance, salary, and reports with ease.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <canvas id="cursor-canvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100vw;height:100vh;"></canvas>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-cube"></i>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">SAI</span>
+          <span class="logo-subtitle">Payroll</span>
+        </div>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+        <i class="fas fa-chart-pie"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="#analytics" class="nav-item" data-page="analytics" id="nav-analytics">
+        <i class="fas fa-chart-line"></i>
+        <span>Analytics</span>
+      </a>
+      <a href="#employees" class="nav-item" data-page="employees" id="nav-employees">
+        <i class="fas fa-users"></i>
+        <span>Employees</span>
+      </a>
+      <a href="#attendance" class="nav-item" data-page="attendance" id="nav-attendance">
+        <i class="fas fa-calendar-check"></i>
+        <span>Attendance</span>
+      </a>
+      <a href="#payroll" class="nav-item" data-page="payroll" id="nav-payroll">
+        <i class="fas fa-money-bill-wave"></i>
+        <span>Payroll</span>
+      </a>
+      <a href="#reports" class="nav-item" data-page="reports" id="nav-reports">
+        <i class="fas fa-file-alt"></i>
+        <span>Reports</span>
+      </a>
+      <a href="#settings" class="nav-item" data-page="settings" id="nav-settings">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </a>
+      <a href="#help" class="nav-item" data-page="help" id="nav-help">
+        <i class="fas fa-question-circle"></i>
+        <span>Help</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-item" id="alertsBadge">
+        <i class="fas fa-bell"></i>
+        <span>Alerts</span>
+        <span class="badge" id="alertCount" style="display:none">0</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content" id="mainContent">
+    <header class="topbar" id="topbar">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search..." id="globalSearch">
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-icon" id="refreshBtn" title="Refresh">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+          <button class="btn-icon" id="alertsBtn" title="Alerts">
+            <i class="fas fa-bell"></i>
+            <span class="badge-dot" id="alertDot" style="display:none"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-container" id="pageContainer">
+      <!-- Pages rendered here by JS -->
+      <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal backdrop -->
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Modal</h3>
+      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Alerts Panel -->
+  <div class="alerts-panel" id="alertsPanel">
+    <div class="alerts-header">
+      <h3>Smart Alerts</h3>
+      <div style="display:flex;gap:0.25rem;">
+        <button class="btn-icon" id="markAllReadAlerts" title="Mark all as read"><i class="fas fa-check-double"></i></button>
+        <button class="btn-icon" id="clearAllAlerts" title="Clear all" style="color:var(--danger)"><i class="fas fa-trash"></i></button>
+        <button class="btn-icon" id="closeAlerts"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="alerts-body" id="alertsBody">
+      <p class="text-muted">No alerts</p>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/particles.js"></script>
+  <script src="/js/pages/dashboard.js"></script>
+  <script src="/js/pages/analytics.js"></script>
+  <script src="/js/pages/employees.js"></script>
+  <script src="/js/pages/attendance.js"></script>
+  <script src="/js/pages/payroll.js"></script>
+  <script src="/js/pages/reports.js"></script>
+  <script src="/js/pages/settings.js"></script>
+  <script src="/js/pages/help.js"></script>
+</body>
+</html>
