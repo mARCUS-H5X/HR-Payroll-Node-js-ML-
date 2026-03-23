@@ -37,8 +37,19 @@ Professional Payroll Management System.
    *Alternatively, on Windows, simply double-click the `start.bat` file.*
 4. Open your browser and navigate to `http://localhost:3000`.
 
-## Screenshot
-![SAI Payroll Screenshot](screenshot.png)
+## Screenshots
+
+### Main Dashboard
+![Main Dashboard](screenshot.png)
+
+### Machine Learning & Analytics Insights
+![ML & Analytics](screenshot_analytics.png)
+
+### Employee Management
+![Employee Management](screenshot_employees.png)
+
+### Payroll Calculation
+![Payroll Calculation](screenshot_payroll.png)
 
 ## License
 MIT
